@@ -1,169 +1,342 @@
-import React, { useEffect, useState } from 'react'
-import { TextField,Box,Button } from '@mui/material'
-import { passwordReGex, usernameReGex } from './reGex'
-import { login,selectUser } from '../store/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
-
+import React, { useEffect, useState } from "react";
+import { TextField, Box, Button } from "@mui/material";
+import {
+  passwordReGex,
+  usernameReGex,
+  nameReGex,
+  phoneReGex,
+  emailReGex,
+} from "./reGex";
+import { login, selectUser } from "../store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Register = () => {
-    const userData = useSelector(selectUser)
-    const dispatch = useDispatch()
-    const [user,setUser] = useState({
-        name: "",
-        email: "",
-        eid: "",
-        phone: ""
-    })
-    const [err,setErr] = useState({
-        name: false,
-        email: false,
-        eid: false,
-        phone: false
-    })
-    const [msg,setMsg] = useState({
-        name: "",
-        email: "",
-        eid: "",
-        phone: ""
-    })
-    function handleSubmit(e){
-        e.preventDefault()
-       alert("hi")
-       console.log(user);
-       dispatch(login({user}))
+  const userData = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    eid: "",
+    phone: "",
+    password: "",
+    cpass: "",
+  });
+  const [err, setErr] = useState({
+    name: false,
+    email: false,
+    eid: false,
+    phone: false,
+    password: false,
+    cpass: false,
+  });
+  const [msg, setMsg] = useState({
+    name: "",
+    email: "",
+    eid: "",
+    phone: "",
+    password: "",
+    cpass: "",
+  });
+  function handleSubmit(e) {
+    e.preventDefault();
+    const errRes = Object.values(err);
+    const infRes = Object.values(user);
+    console.log(errRes);
+    console.log(infRes);
+    if (!infRes.includes("")) {
+      if (!errRes.includes(true)) {
+        alert("hi");
+        console.log(user);
+        return dispatch(login({ user }));
+      }
     }
-    const handleChange = (e)=>{
-        const {name,value} = e.target;
-        setUser(prev=>{
-            return{
-                ...prev,
-                [name]: value
-            }
-        })
+    alert("Something went wrong");
+  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+  const validate = (e) => {
+    if (e.target.name === "password") {
+      if (!passwordReGex.test(user.password)) {
+        setErr((prev) => {
+          return {
+            ...prev,
+            password: true,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            password: "Password Validation Failed",
+          };
+        });
+      } else {
+        setErr((prev) => {
+          return {
+            ...prev,
+            password: false,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            password: "",
+          };
+        });
+      }
+      validatecpass();
     }
-    const validate = (e)=>{
-        if(e.target.name === "password"){
-        if(!passwordReGex.test(user.password)){
-            setErr(prev=>{
-                return{
-                    ...prev,
-                    password: true
-                }
-            })
-            setMsg(prev=>{
-                return{
-                    ...prev,
-                    password: "Password Validation Failed"
-                }
-            })
-        }
-        else{
-            setErr(prev=>{
-                return{
-                    ...prev,
-                    password: false
-                }
-            })
-            setMsg(prev=>{
-                return{
-                    ...prev,
-                    password: ""
-                }
-            })
-        }
+    if (e.target.name === "eid") {
+      if (!usernameReGex.test(user.eid)) {
+        setErr((prev) => {
+          return {
+            ...prev,
+            eid: true,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            eid: "Employee Id Validation Failed",
+          };
+        });
+      } else {
+        setErr((prev) => {
+          return {
+            ...prev,
+            eid: false,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            eid: "",
+          };
+        });
+      }
     }
-        if(e.target.name === "username"){
-        if(!usernameReGex.test(user.username)){
-            setErr(prev=>{
-                return{
-                    ...prev,
-                    username: true
-                }
-            })
-            setMsg(prev=>{
-                return{
-                    ...prev,
-                    username: "Username Validation Failed"
-                }
-            })
-        }
-        else{
-            setErr(prev=>{
-                return{
-                    ...prev,
-                    username: false
-                }
-            })
-            setMsg(prev=>{
-                return{
-                    ...prev,
-                    username: ""
-                }
-            })
-        }
+    if (e.target.name === "name") {
+      if (!nameReGex.test(user.name)) {
+        setErr((prev) => {
+          return {
+            ...prev,
+            name: true,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            name: "Name Validation Failed",
+          };
+        });
+      } else {
+        setErr((prev) => {
+          return {
+            ...prev,
+            name: false,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            name: "",
+          };
+        });
+      }
     }
+    if (e.target.name === "phone") {
+      if (!phoneReGex.test(user.phone)) {
+        setErr((prev) => {
+          return {
+            ...prev,
+            phone: true,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            phone: "Phone Number Validation Failed",
+          };
+        });
+      } else {
+        setErr((prev) => {
+          return {
+            ...prev,
+            phone: false,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            phone: "",
+          };
+        });
+      }
     }
+    if (e.target.name === "email") {
+      if (!emailReGex.test(user.email)) {
+        setErr((prev) => {
+          return {
+            ...prev,
+            email: true,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            email: "Email Validation Failed",
+          };
+        });
+      } else {
+        setErr((prev) => {
+          return {
+            ...prev,
+            email: false,
+          };
+        });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            email: "",
+          };
+        });
+      }
+    }
+  };
+  function validatecpass() {
+    if (user.password !== user.cpass) {
+      setErr((prev) => {
+        return {
+          ...prev,
+          cpass: true,
+        };
+      });
+      setMsg((prev) => {
+        return {
+          ...prev,
+          cpass: "Password doesn't match",
+        };
+      });
+    } else {
+      setErr((prev) => {
+        return {
+          ...prev,
+          cpass: false,
+        };
+      });
+      setMsg((prev) => {
+        return {
+          ...prev,
+          cpass: "",
+        };
+      });
+    }
+  }
   return (
     <div>
-        <button onClick={()=>{console.log(userData);}}>a</button>
-         <Box
-         onSubmit={handleSubmit}
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '50ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-      <TextField
-          error={err.name}
-          id="outlined-error-helper-text"
-          label="Name"
-          helperText={msg.name}
-          value={user.name}
-          onChange={handleChange}
-          onBlur={validate}
-          name="name"
-        />
-        <TextField
-          error={err.email}
-          id="outlined-error-helper-text"
-          type="email"
-          label="Email"
-          helperText={msg.email}
-          value={user.email}
-          onChange={handleChange}
-          onBlur={validate}
-          name="email"
-        />
-        <TextField
-          error={err.phone}
-          id="outlined-error-helper-text"
-          type="tel"
-          label="Phone"
-          helperText={msg.phone}
-          value={user.phone}
-          onChange={handleChange}
-          onBlur={validate}
-          name="phone"
-        />
-        <TextField
-          error={err.eid}
-          id="outlined-error-helper-text"
-          type="number"
-          label="Employee Id"
-          helperText={msg.eid}
-          value={user.eid}
-          onChange={handleChange}
-          onBlur={validate}
-          name="eid"
-        />
-        <Button disabled={err.password && err.username} variant="contained" type='submit'>Submit</Button>
-      </div>
+      <button
+        onClick={() => {
+          console.log(userData);
+        }}>
+        a
+      </button>
+      <Box
+        onSubmit={handleSubmit}
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "50ch" },
+        }}
+        noValidate
+        autoComplete="off">
+        <div>
+          <TextField
+            error={err.name}
+            id="outlined-error-helper-text"
+            label="Name"
+            helperText={msg.name}
+            value={user.name}
+            onChange={handleChange}
+            onBlur={validate}
+            name="name"
+            required
+          />
+          <TextField
+            error={err.email}
+            id="outlined-error-helper-text"
+            type="email"
+            label="Email"
+            helperText={msg.email}
+            value={user.email}
+            onChange={handleChange}
+            onBlur={validate}
+            name="email"
+            required
+          />
+          <TextField
+            error={err.phone}
+            id="outlined-error-helper-text"
+            type="tel"
+            label="Phone"
+            helperText={msg.phone}
+            value={user.phone}
+            onChange={handleChange}
+            onBlur={validate}
+            name="phone"
+            required
+          />
+          <TextField
+            error={err.eid}
+            id="outlined-error-helper-text"
+            type="number"
+            label="Employee Id"
+            helperText={msg.eid}
+            value={user.eid}
+            onChange={handleChange}
+            onBlur={validate}
+            name="eid"
+            required
+          />
+          <TextField
+            error={err.password}
+            id="outlined-error-helper-text"
+            type="password"
+            label="Password"
+            helperText={msg.password}
+            value={user.password}
+            onChange={handleChange}
+            onBlur={validate}
+            name="password"
+            required
+          />
+          <TextField
+            error={err.cpass}
+            id="outlined-error-helper-text"
+            type="password"
+            label="Confirm Password"
+            helperText={msg.cpass}
+            value={user.cpass}
+            onChange={handleChange}
+            onBlur={validatecpass}
+            name="cpass"
+            required
+          />
+          <br />
+          <Button
+            disabled={err.password && err.username}
+            variant="contained"
+            type="submit">
+            Submit
+          </Button>
+        </div>
       </Box>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
