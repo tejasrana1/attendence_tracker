@@ -1,0 +1,20 @@
+{
+  "user": [
+    {
+      "name": "tej",
+      "email": "t@t",
+      "eid": "1231",
+      "phone": "1231231231",
+      "password": "$2a$10$DLAlfZ8iYyN7l44vegoBEuEZm7iaT.tCKnuC76SIw45lG4yVj126O",
+      "id": 4
+    }
+  ],
+  "time": [
+    {
+      "signIn": "1656935343059",
+      "date": "04 Jul 2022",
+      "status": "W",
+      "id": 1
+    }
+  ]
+}

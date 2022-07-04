@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { login } from '../store/userSlice'
 import { passwordReGex, usernameReGex } from './reGex'
 import bcrypt from "bcryptjs";
-
+import $ from "jquery"
 
 const Login = () => {
     const [user,setUser] = useState({
@@ -20,16 +20,22 @@ const Login = () => {
         password: ""
     })
     const dispatch = useDispatch();
-    useEffect(()=>{
-        dispatch(login({
-            name: "Tejas"
-        }))
-    },[])
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault()
-        let salt = bcrypt.genSaltSync(10)
-        let hash = bcrypt.hashSync(user.password,salt)
-        alert(hash)
+        const usr = await $.get("http://localhost:8080/user/")
+        const selectedUser = await usr.filter(emp=> emp.eid === user.username)
+        if(selectedUser[0].eid === user.username){
+            if(bcrypt.compareSync(user.password,selectedUser[0].password)){
+                dispatch(login({
+                    name: selectedUser[0].name,
+                    eid: selectedUser[0].eid,
+                    phone: selectedUser[0].phone,
+                    email: selectedUser[0].email
+                }))
+                return console.log(`Welcome ${selectedUser[0].name}`);
+            }
+        }
+        console.log("sorry");
     }
     const handleChange = (e)=>{
         const {name,value} = e.target;
@@ -117,7 +123,7 @@ const Login = () => {
       <TextField
           error={err.username}
           id="outlined-error-helper-text"
-          label="Username"
+          label="Employee Id"
           helperText={msg.username}
           value={user.username}
           onChange={handleChange}

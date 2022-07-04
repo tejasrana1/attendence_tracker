@@ -8,11 +8,12 @@ import {
   emailReGex,
 } from "./reGex";
 import { login, selectUser } from "../store/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import TransitionAlerts from "./Alert";
+import $ from "jquery"
+import bcrypt from "bcryptjs";
+
 
 const Register = () => {
-  const userData = useSelector(selectUser);
-  const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -37,6 +38,7 @@ const Register = () => {
     password: "",
     cpass: "",
   });
+  const [alert,setAlert] = useState(false)
   function handleSubmit(e) {
     e.preventDefault();
     const errRes = Object.values(err);
@@ -45,12 +47,20 @@ const Register = () => {
     console.log(infRes);
     if (!infRes.includes("")) {
       if (!errRes.includes(true)) {
-        alert("hi");
+        let salt = bcrypt.genSaltSync(10)
+        let hash = bcrypt.hashSync(user.password,salt)
+        window.alert("hi");
         console.log(user);
-        return dispatch(login({ user }));
+        return $.post("http://localhost:8080/user",{
+          name: user.name,
+          email: user.email,
+          eid: user.eid,
+          phone: user.phone,
+          password: hash,
+        })
       }
     }
-    alert("Something went wrong");
+    setAlert(true)
   }
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -240,12 +250,7 @@ const Register = () => {
   }
   return (
     <div>
-      <button
-        onClick={() => {
-          console.log(userData);
-        }}>
-        a
-      </button>
+      {alert && <TransitionAlerts setAlert={setAlert} alert={alert}>Fill the form correctly.</TransitionAlerts>}
       <Box
         onSubmit={handleSubmit}
         component="form"
@@ -265,6 +270,7 @@ const Register = () => {
             onBlur={validate}
             name="name"
             required
+            onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <TextField
             error={err.email}
@@ -277,6 +283,7 @@ const Register = () => {
             onBlur={validate}
             name="email"
             required
+            onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <TextField
             error={err.phone}
@@ -289,6 +296,7 @@ const Register = () => {
             onBlur={validate}
             name="phone"
             required
+            onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <TextField
             error={err.eid}
@@ -301,6 +309,7 @@ const Register = () => {
             onBlur={validate}
             name="eid"
             required
+            onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <TextField
             error={err.password}
@@ -313,6 +322,7 @@ const Register = () => {
             onBlur={validate}
             name="password"
             required
+            onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <TextField
             error={err.cpass}
@@ -325,6 +335,7 @@ const Register = () => {
             onBlur={validatecpass}
             name="cpass"
             required
+            onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <br />
           <Button
