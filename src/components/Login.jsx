@@ -5,8 +5,14 @@ import { login } from '../store/userSlice'
 import { passwordReGex, usernameReGex } from './reGex'
 import bcrypt from "bcryptjs";
 import $ from "jquery"
+import TransitionAlerts from "./Alert";
+import { Link,useNavigate } from 'react-router-dom'
+
+
 
 const Login = () => {
+    const navigate = useNavigate();
+  const [alert,setAlert] = useState(false)
     const [user,setUser] = useState({
         username: "",
         password: ""
@@ -32,10 +38,16 @@ const Login = () => {
                     phone: selectedUser[0].phone,
                     email: selectedUser[0].email
                 }))
-                return console.log(`Welcome ${selectedUser[0].name}`);
+                sessionStorage.setItem("login", JSON.stringify({
+                    name: selectedUser[0].name,
+                    eid: selectedUser[0].eid,
+                    phone: selectedUser[0].phone,
+                    email: selectedUser[0].email
+                }))
+                return navigate("/");
             }
         }
-        console.log("sorry");
+        setAlert(true)
     }
     const handleChange = (e)=>{
         const {name,value} = e.target;
@@ -109,12 +121,14 @@ const Login = () => {
     }
     }
   return (
-    <div>
+      <>
+    <div className='loginContainer'>
+      {alert && <TransitionAlerts setAlert={setAlert} alert={alert}>Incorrect Username or Password</TransitionAlerts>}
          <Box
          onSubmit={handleSubmit}
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '50ch' },
+        '& .MuiTextField-root': { m: 1},
       }}
       noValidate
       autoComplete="off"
@@ -129,7 +143,8 @@ const Login = () => {
           onChange={handleChange}
           onBlur={validate}
           name="username"
-        />
+          onFocus={()=>{(alert === true) && setAlert(false)}}
+        /> <br />
         <TextField
           error={err.password}
           type="password"
@@ -140,11 +155,16 @@ const Login = () => {
           onChange={handleChange}
           onBlur={validate}
           name="password"
-        />
-        <Button disabled={err.password && err.username} variant="contained" type='submit'>Submit</Button>
+          onFocus={()=>{(alert === true) && setAlert(false)}}
+        /> <br />
+        <Button style={{margin: "10px"}} disabled={err.password && err.username} variant="contained" type='submit'>Sign In&nbsp;</Button>
+        <Link style={{textDecoration: "none"}} to="/register">
+        <Button style={{margin: "10px"}} variant="outlined" type='button'>Sign Up</Button>
+        </Link>
       </div>
       </Box>
     </div>
+    </>
   )
 }
 

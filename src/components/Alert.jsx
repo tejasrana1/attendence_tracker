@@ -13,6 +13,7 @@ export default function TransitionAlerts(props) {
     <Box sx={{ width: '100%' }}>
       <Collapse in={open}>
         <Alert
+        style={{position: "fixed",top: "1%"}} 
         severity="error"
           action={
             <IconButton

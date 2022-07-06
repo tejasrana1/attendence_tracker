@@ -1,10 +1,12 @@
 import { Button } from '@mui/material';
 import React, { useState,useEffect, useCallback } from 'react'
 import $ from "jquery"
+import { selectUser } from '../../../store/userSlice';
+import { useSelector } from 'react-redux';
 
 
 const JoinSession = () => {
-
+  const user = useSelector(selectUser)
   let [seconds,setSeconds] = useState("00")
   let [minutes,setMinutes] = useState("00")
   let [hours,setHours] = useState("00")
@@ -15,10 +17,12 @@ const JoinSession = () => {
   useEffect(()=>{
     console.log(Date(time).toString());
     $.get("http://localhost:8080/time",(res,err)=>{
+      if(String(new Date(res[0].date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))
       if(res[0]?.signOut){
         setShiftOver(true)
-        return alert("Today's shift is already over")
+        return console.log("dndndn");
       }
+      if(String(new Date(res[0].date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))
       if(res[0]?.signIn){
       setCounter((time-res[0].signIn)/1000);
       setIsActive(true)
@@ -52,17 +56,32 @@ let day = weekday[d.getDay()];
 
     return () => clearInterval(intervalId);
   }, [isActive, counter])
+
+
+  
   async function hii(){
     if(!isActive){
       console.log("hi");
       $.post("http://localhost:8080/time", {
+      eid: user.user.eid,
       signIn: Date.now(),
       date: date,
       status: "W",
+    },(res,err)=>{
+      console.log(res);
     })
     }
     else{
-      var itm = await $.get("http://localhost:8080/time/1")
+      var itms = await $.get("http://localhost:8080/time/")
+      itms = await itms.filter(itm=> itm.eid === user.user.eid)
+      var itm = await itms.filter((itm) => {
+        console.log(String(new Date(itm.date)));
+        console.log(String(new Date().toString()));
+        return (String(new Date(itm.date)).slice(4,15)) === String(new Date().toString()).slice(4,15)
+      })
+      itm = itm[0]
+      console.log(itms);
+      console.log(itm);
       itm.signOut = await Date.now()
       console.log((itm.signOut-itm.signIn)/(1000*3600));
       itm.totalHours = Math.floor((itm.signOut-itm.signIn)/(1000*60*60))
@@ -72,18 +91,23 @@ let day = weekday[d.getDay()];
         type: 'PUT',
         data: itm,
         success: (data) => {
-          alert('Load was performed.');
+          console.log(data);
         }
       });
       setShiftOver(true)
     }
   }
   return (<>
-    { !shiftOver ? <div className='card'>
-      {date} <br />
-      {day} <br /> <br />
-      {hours} : {minutes} : {seconds} <br />
-      <Button onClick={async()=>{await setIsActive(!isActive); hii() }}>{!isActive ?  "Sign In": "Sign Out"}</Button>
+    { !shiftOver ? <div className='card' style={{
+      width: "300px",
+      height: "200px"
+    }}>
+      <p className='cardHeading'>
+      {date}
+      </p>
+      <p className='cardInfo'>{day}</p>
+      <p className='cardMain'>{hours} : {minutes} : {seconds} </p>
+      <Button variant="contained" style={{width: "110px",marginLeft: "100%",marginTop: "15px", transform: "translateX(-120%)"}} onClick={async()=>{await setIsActive(!isActive); hii() }}>{!isActive ?  "Sign In": "Sign Out"}</Button>
     </div> : 
   <div className='card'>
   <h1>shiftOver</h1></div>}</>

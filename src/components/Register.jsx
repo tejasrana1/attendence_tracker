@@ -11,6 +11,7 @@ import { login, selectUser } from "../store/userSlice";
 import TransitionAlerts from "./Alert";
 import $ from "jquery"
 import bcrypt from "bcryptjs";
+import {Link} from "react-router-dom";
 
 
 const Register = () => {
@@ -249,13 +250,13 @@ const Register = () => {
     }
   }
   return (
-    <div>
+    <div className="registerContainer">
       {alert && <TransitionAlerts setAlert={setAlert} alert={alert}>Fill the form correctly.</TransitionAlerts>}
       <Box
         onSubmit={handleSubmit}
         component="form"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "50ch" },
+          "& .MuiTextField-root": { m: 1},
         }}
         noValidate
         autoComplete="off">
@@ -338,12 +339,13 @@ const Register = () => {
             onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <br />
-          <Button
-            disabled={err.password && err.username}
-            variant="contained"
-            type="submit">
-            Submit
-          </Button>
+          <Button style={{margin: "10px"}} 
+          disabled={err.password && err.username} 
+          variant="contained" 
+          type='submit'>Sign Up&nbsp;</Button>
+        <Link style={{textDecoration: "none"}} to="/login">
+        <Button style={{margin: "10px"}} variant="outlined" type='button'>Sign In</Button>
+        </Link>
         </div>
       </Box>
     </div>

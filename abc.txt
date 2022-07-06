@@ -5,3 +5,11 @@ npm i redux react-redux jquery react-router-dom bcryptjs @reduxjs/toolkit @mui/m
 
 const itm = [...items, ...items2]
 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
+
+
+
+active users
+deleted users
+inactive users
+total users
+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

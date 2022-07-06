@@ -14,8 +14,8 @@ const Home = () => {
       <Grid container spacing={0}>
         <SideBar></SideBar>
         <div className='mainContainer'>
-        <NavBar></NavBar>
         <div className='container'>
+        <NavBar></NavBar>
           <Main />
         </div>
         </div>
