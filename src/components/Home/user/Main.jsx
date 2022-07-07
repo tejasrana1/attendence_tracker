@@ -19,9 +19,6 @@ const Main = () => {
   <Grid item xs={8} md={6} lg={4}>
         <CardHolidays />
   </Grid>
-  <Grid item xs={8} md={6}>
-        <Calendar />
-  </Grid>
       </Grid>
     </div>
   )

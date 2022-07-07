@@ -19,67 +19,31 @@
   ],
   "time": [
     {
-      "eid": "1231",
-      "signIn": "1657097745888",
-      "date": "02 Jul 2022",
+      "eid": "1111",
+      "signIn": "1657144071117",
+      "date": "07 Jul 2022",
       "status": "P",
       "id": 1,
-      "signOut": "1657097804585",
-      "totalHours": "0"
-    },
-    {
-      "eid": "1231",
-      "signIn": "1657097745888",
-      "date": "03 Jul 2022",
-      "status": "A",
-      "id": 2,
-      "signOut": "1657097804585",
-      "totalHours": "0"
-    },
-    {
-      "eid": "1231",
-      "signIn": "1657097745888",
-      "date": "04 Jul 2022",
-      "status": "L",
-      "id": 3,
-      "signOut": "1657097804585",
-      "totalHours": "0"
-    },
-    {
-      "eid": "1231",
-      "signIn": "1657097745888",
-      "date": "05 Jul 2022",
-      "status": "A",
-      "id": 4,
-      "signOut": "1657097804585",
-      "totalHours": "0"
-    },
-    {
-      "eid": "1231",
-      "signIn": "1657097745888",
-      "date": "06 Jul 2022",
-      "status": "P",
-      "id": 5,
-      "signOut": "1657097804585",
-      "totalHours": "0"
+      "signOut": "1657185778509",
+      "totalHours": "9"
     },
     {
       "eid": "1111",
-      "signIn": "1657097745888",
-      "date": "07 Jul 2022",
+      "signIn": "1657144071117",
+      "date": "06 Jul 2022",
       "status": "P",
-      "id": 6,
-      "signOut": "1657097804585",
-      "totalHours": "0"
+      "id": 2,
+      "signOut": "1657185605209",
+      "totalHours": "11"
     },
     {
-      "eid": "1231",
-      "signIn": "1657097745888",
-      "date": "08 Jul 2022",
+      "eid": "1111",
+      "signIn": "1657164071117",
+      "date": "05 Jul 2022",
       "status": "A",
-      "id": 6,
-      "signOut": "1657097804585",
-      "totalHours": "0"
+      "id": 3,
+      "signOut": "1657185728266",
+      "totalHours": "6"
     }
   ]
 }

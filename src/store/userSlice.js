@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import $ from "jquery";
 
 
 const innitialData = JSON.parse(sessionStorage.getItem("login"))
@@ -13,7 +12,8 @@ export const userSlice = createSlice({
             eid: (innitialData) ? innitialData.eid : null,
             phone: (innitialData) ? innitialData.phone : null,
         },
-        attendence: (attd)? attd: []
+        attendence: (attd)? attd: [],
+        today: {}
     },
     reducers: {
         login: (state,action) =>{
@@ -21,12 +21,16 @@ export const userSlice = createSlice({
         },
         attendence: (state,action) =>{
             state.attendence = action.payload
+        },
+        today: (state,action) =>{
+            state.today =action.payload;
         }
     }
 });
-export const {login, attendence} = userSlice.actions;
+export const {login, attendence, today} = userSlice.actions;
 
 export const selectUser = (state)=> state.user;
 export const selectAttendance = (state) => state.user.attendence;
+export const selectToday = (state) => state.user.today;
 
 export default userSlice.reducer;

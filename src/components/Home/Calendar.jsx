@@ -10,12 +10,12 @@ const CustomCalendar = () => {
   const attd = useSelector(selectAttendance)
   const user = useSelector(selectUser)
   useEffect(()=>{
-    console.log(attd);
+    // console.log(attd);
     const doc = document.querySelectorAll("abbr")
     doc.forEach((itm)=>{
       attd.forEach(arrd=>{
-        console.log(user.user);
-        console.log(arrd);
+        // console.log(user.user);
+        // console.log(arrd);
         if(user.user.eid === arrd.eid)
         if(String( new Date(itm.getAttribute("aria-label"))) === String(new Date(arrd.date))){
           if(arrd.status === "P")

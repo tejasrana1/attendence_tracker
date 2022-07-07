@@ -12,10 +12,11 @@ import NavBar from './components/Home/NavBar';
 import "./components/Home/home.css"
 import $ from "jquery"
 import { attendence } from './store/userSlice';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from './store/userSlice';
 
 function FourOFour(){
+
   return <div style={{
     width: "200vw",
     height: "100vh",
@@ -26,10 +27,15 @@ function FourOFour(){
   }}> <h1>Page Not Found</h1> </div>
 }
 function App() {
+  const user = useSelector(selectUser)
   const dispatch = useDispatch()
   let location = useLocation()
   async function hello(){
-  const attd = await $.get("http://localhost:8080/time")
+  let attd = await $.get("http://localhost:8080/time")
+  // console.log(attd);
+  // console.log(user.user);
+  attd = await attd.filter(itm=> itm.eid === user.user.eid)
+  console.log(attd);
   dispatch(attendence(attd))
   sessionStorage.setItem("attd", JSON.stringify(attd))
   }
@@ -56,6 +62,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/admin/main" element={<AdminMain />} />
+        <Route exact path="/calendar" element={<Calendar />} />
         <Route path="*" element={<FourOFour />} />
         </Routes>
         </div>

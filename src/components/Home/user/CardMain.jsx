@@ -1,11 +1,14 @@
 import { Button } from '@mui/material';
 import React, { useState,useEffect, useCallback } from 'react'
 import $ from "jquery"
-import { selectUser } from '../../../store/userSlice';
-import { useSelector } from 'react-redux';
-
+import { selectUser,selectAttendance, selectToday } from '../../../store/userSlice';
+import { useSelector,useDispatch } from 'react-redux';
+import { today } from '../../../store/userSlice';
 
 const JoinSession = () => {
+  const dispatch = useDispatch()
+  const td = useSelector(selectToday)
+  const attd = useSelector(selectAttendance)
   const user = useSelector(selectUser)
   let [seconds,setSeconds] = useState("00")
   let [minutes,setMinutes] = useState("00")
@@ -15,16 +18,25 @@ const JoinSession = () => {
   let time = Date.now()
   const [shiftOver,setShiftOver] = useState(false)
   useEffect(()=>{
-    console.log(Date(time).toString());
-    $.get("http://localhost:8080/time",(res,err)=>{
-      if(String(new Date(res[0].date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))
-      if(res[0]?.signOut){
+  let today1 = attd.filter(itm=> (itm.eid === user.user.eid && (String(new Date(itm.date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))))
+  today1 = today1[0];
+  console.log(today1);
+  console.log(user.user);
+  dispatch(today(today1))
+    // console.log(Date(time).toString());
+    $.get("http://localhost:8080/time",async (res,err)=>{
+      console.log(res);
+      let response = await res.filter(itm=> (itm.eid === user.user.eid && (String(new Date(itm.date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))))
+      response = response[0];
+      console.log(response);
+      if(String(new Date(response.date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))
+      if(response.signOut){
         setShiftOver(true)
         return console.log("dndndn");
       }
-      if(String(new Date(res[0].date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))
-      if(res[0]?.signIn){
-      setCounter((time-res[0].signIn)/1000);
+      if(String(new Date(response.date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))
+      if(response.signIn){
+      setCounter((time-response.signIn)/1000);
       setIsActive(true)
       }
     })
@@ -74,20 +86,17 @@ let day = weekday[d.getDay()];
     else{
       var itms = await $.get("http://localhost:8080/time/")
       itms = await itms.filter(itm=> itm.eid === user.user.eid)
-      var itm = await itms.filter((itm) => {
-        console.log(String(new Date(itm.date)));
-        console.log(String(new Date().toString()));
-        return (String(new Date(itm.date)).slice(4,15)) === String(new Date().toString()).slice(4,15)
-      })
-      itm = itm[0]
+      var itm = await itms.filter(itm=> (itm.eid === user.user.eid && (String(new Date(itm.date).toString().slice(4,15)) === String(new Date().toString().slice(4,15)))))
+      itm = itm[0];
       console.log(itms);
       console.log(itm);
       itm.signOut = await Date.now()
       console.log((itm.signOut-itm.signIn)/(1000*3600));
       itm.totalHours = Math.floor((itm.signOut-itm.signIn)/(1000*60*60))
       itm.status = (itm.totalHours>=8) ? "P" : "A";
+      console.log(td.id);
       $.ajax({
-        url: "http://localhost:8080/time/1",
+        url: `http://localhost:8080/time/${td.id}`,
         type: 'PUT',
         data: itm,
         success: (data) => {
