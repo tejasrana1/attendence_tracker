@@ -14,7 +14,7 @@ import $ from "jquery"
 import { attendence } from './store/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from './store/userSlice';
-
+import { attendance, data } from './store/adminSlice';
 function FourOFour(){
 
   return <div style={{
@@ -32,6 +32,9 @@ function App() {
   let location = useLocation()
   async function hello(){
   let attd = await $.get("http://localhost:8080/time")
+  let allUsers = await $.get("http://localhost:8080/user")
+  await dispatch(data(allUsers))
+  await dispatch(attendance(attd))
   // console.log(attd);
   // console.log(user.user);
   attd = await attd.filter(itm=> itm.eid === user.user.eid)

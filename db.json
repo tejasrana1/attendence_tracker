@@ -6,7 +6,7 @@
       "eid": "1231",
       "phone": "1231231231",
       "password": "$2a$10$DLAlfZ8iYyN7l44vegoBEuEZm7iaT.tCKnuC76SIw45lG4yVj126O",
-      "id": 4
+      "id": 1
     },
     {
       "name": "tejas",
@@ -14,7 +14,40 @@
       "eid": "1111",
       "phone": "1231231231",
       "password": "$2a$10$D70ilKDV4wLxOg3M.8tmLOPfmrDBvMulX5vtiv9pXPTbgBMTeG9LO",
+      "id": 2
+    },
+    {
+      "name": "abc",
+      "email": "a@a",
+      "eid": "1122",
+      "phone": "1231231231",
+      "password": "$2a$10$4lN3xr4dknfqsLQJAsK8w.jH4fRlrQPK0i0QFtHsw2XO2t8wKEVaS",
+      "id": 3
+    },
+    {
+      "name": "abca",
+      "email": "a@a",
+      "eid": "1123",
+      "phone": "1231231231",
+      "password": "$2a$10$cmjaR9O6xmRsmLyypqojW.SfNYK0Jav2AiXrkVuamKB0FFkO8x8FG",
+      "id": 4,
+      "status": "deleted"
+    },
+    {
+      "name": "abcaa",
+      "email": "a@a",
+      "eid": "1124",
+      "phone": "1231231231",
+      "password": "$2a$10$ndlvYED4z0cL/2DjW2/auOZGoVFSN0fkEts0762n8E86aNR3nXm52",
       "id": 5
+    },
+    {
+      "name": "bcc",
+      "email": "a@a",
+      "eid": "1125",
+      "phone": "1231231231",
+      "password": "$2a$10$xODJvFStuGn2vEQxvgq9/eeNWYDWCC50sa7iMg0TegzeeRPemr16u",
+      "id": 6
     }
   ],
   "time": [
@@ -44,6 +77,36 @@
       "id": 3,
       "signOut": "1657185728266",
       "totalHours": "6"
+    },
+    {
+      "eid": "1111",
+      "signIn": "1657603962072",
+      "date": "12 Jul 2022",
+      "status": "W",
+      "id": 4
+    },
+    {
+      "eid": "1125",
+      "signIn": "1657618290986",
+      "date": "12 Jul 2022",
+      "status": "W",
+      "id": 5
+    },
+    {
+      "eid": "1124",
+      "signIn": "1657618316307",
+      "date": "12 Jul 2022",
+      "status": "W",
+      "id": 6
+    },
+    {
+      "eid": "1231",
+      "signIn": "1657618664432",
+      "date": "12 Jul 2022",
+      "status": "A",
+      "id": 7,
+      "signOut": "1657618936365",
+      "totalHours": "0"
     }
   ]
 }

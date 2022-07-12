@@ -100,3 +100,11 @@
     color: yellow;
     font-weight: 700;
    }
+   .active{
+    background: pink;
+   }
+   .calendarInfo{
+    width: 400px;
+    height: 100px;
+    border: 1px solid black;
+   }
