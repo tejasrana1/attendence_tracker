@@ -110,12 +110,47 @@
     /* display: flex;
     flex-direction: row;
     align-items: center; */
-    padding: 20px 80px;
+    padding: 20px 0;
 }
 p{
     margin-top: 0;
 }
+.admin{
+    width: 250px;
+    height: 150px;
+    cursor: pointer;
+}
 
+.adminData{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    margin: 10px;
+    max-width: 1060px;
+    height: 60vh;
+    overflow-y: scroll;
+    background-color: #2C3639;
+    border-radius: 20px;
+    padding-top: 10px;
+}
+
+.profileCard{
+    padding: 15px;
+    min-height: 80px;
+    width: 85%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    border-radius: 10px;
+    margin: 20px auto;
+    background: #EBEDEC;
+    text-align: left;
+    box-sizing: content-box;
+    transition: 200ms;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #1e2425;
+    font-weight: 500;
+}
+.profileCard:hover{
+    transform: scale(1.03);
+}
 
 
 

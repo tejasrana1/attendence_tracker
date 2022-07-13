@@ -82,22 +82,28 @@
       "eid": "1111",
       "signIn": "1657603962072",
       "date": "12 Jul 2022",
-      "status": "W",
-      "id": 4
+      "status": "A",
+      "id": 4,
+      "signOut": "1657618936365",
+      "totalHours": "0"
     },
     {
       "eid": "1125",
       "signIn": "1657618290986",
       "date": "12 Jul 2022",
-      "status": "W",
-      "id": 5
+      "status": "A",
+      "id": 5,
+      "signOut": "1657618936365",
+      "totalHours": "0"
     },
     {
       "eid": "1124",
       "signIn": "1657618316307",
       "date": "12 Jul 2022",
-      "status": "W",
-      "id": 6
+      "status": "A",
+      "id": 6,
+      "signOut": "1657618936365",
+      "totalHours": "0"
     },
     {
       "eid": "1231",
@@ -107,6 +113,22 @@
       "id": 7,
       "signOut": "1657618936365",
       "totalHours": "0"
+    },
+    {
+      "eid": "1111",
+      "signIn": "1657692584375",
+      "date": "13 Jul 2022",
+      "status": "A",
+      "id": 8,
+      "signOut": "1657704971759",
+      "totalHours": "3"
+    },
+    {
+      "eid": "1231",
+      "signIn": "1657704857752",
+      "date": "13 Jul 2022",
+      "status": "W",
+      "id": 9
     }
   ]
 }
