@@ -15,6 +15,7 @@ import { attendence } from './store/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from './store/userSlice';
 import { attendance, data } from './store/adminSlice';
+import Profile from './components/Home/user/Profile';
 function FourOFour(){
 
   return <div style={{
@@ -61,11 +62,12 @@ function App() {
         <div className='container'>
         <NavBar></NavBar>
         <Routes>
-        <Route exact path="/" element={<Main />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
+        <Route exact path="/" element={<Main />} />
         <Route exact path="/admin/main" element={<AdminMain />} />
         <Route exact path="/calendar" element={<Calendar />} />
+        <Route exact path="/profile" element={<Profile />} />
         <Route path="*" element={<FourOFour />} />
         </Routes>
         </div>

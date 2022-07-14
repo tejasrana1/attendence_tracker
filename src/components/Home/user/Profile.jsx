@@ -1,50 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Box, Button } from "@mui/material";
 import {
-  passwordReGex,
   usernameReGex,
   nameReGex,
   phoneReGex,
   emailReGex,
 } from "./reGex";
-import TransitionAlerts from "./Alert";
+import { selectUser,login } from "../../../store/userSlice";
+import { useSelector,useDispatch } from "react-redux";
+import TransitionAlerts from "../../Alert";
 import $ from "jquery"
-import bcrypt from "bcryptjs";
-import {Link} from "react-router-dom";
+// import bcrypt from "bcryptjs";
+// import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Profile = () => {
+    const dispatch = useDispatch()
+    const usr = useSelector(selectUser).user
   const navigate = useNavigate();
-    useEffect(()=>{
-        if(sessionStorage.getItem("login"))
-        navigate("/")
-    },[])
   const [user, setUser] = useState({
     name: "",
     email: "",
     eid: "",
     phone: "",
+    role: "",
     password: "",
-    cpass: "",
+    id: ""
   });
+    useEffect(()=>{
+        if(!sessionStorage.getItem("login"))
+        navigate("/login")
+        async function hii(){
+            const hi = await $.get(`http://localhost:8080/user/${usr.id}`)
+            setUser({
+                name: hi.name,
+                email: hi.email,
+                eid: hi.eid,
+                phone: hi.phone,
+                role: hi.role,
+                password: hi.password,
+                id: hi.id
+            })
+        }
+        hii()
+    },[])
   const [err, setErr] = useState({
     name: false,
     email: false,
     eid: false,
     phone: false,
-    password: false,
-    cpass: false,
   });
   const [msg, setMsg] = useState({
     name: "",
     email: "",
     eid: "",
     phone: "",
-    password: "",
-    cpass: "",
   });
   const [alert,setAlert] = useState(false)
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     const errRes = Object.values(err);
     const infRes = Object.values(user);
@@ -52,32 +65,25 @@ const Register = () => {
     console.log(infRes);
     if (!infRes.includes("")) {
       if (!errRes.includes(true)) {
-        let salt = bcrypt.genSaltSync(10)
-        let hash = bcrypt.hashSync(user.password,salt)
-        console.log(user);
-        const alreadyExist = await $.get("http://localhost:8080/user")
-        console.log(alreadyExist);
-        let ifis=false;
-        await alreadyExist.forEach((aex)=>{
-          if(aex.eid === String(user.eid)){
-            ifis=true;
-          }
-        })
-        console.log(ifis);
-        if(ifis === true){
-          window.alert("EID not unique")
-          navigate("/register")
-        }
-        else{
         window.alert("Registered Successfully");
-        $.post("http://localhost:8080/user",{
-          name: user.name,
-          email: user.email,
-          eid: user.eid,
-          phone: user.phone,
-          password: hash,
-        })
-    return navigate("/login")}
+        console.log(user);
+        // $.a("http://localhost:8080/user",{
+        //   name: user.name,
+        //   email: user.email,
+        //   eid: user.eid,
+        //   phone: user.phone,
+        // })
+        $.ajax({
+            url: `http://localhost:8080/user/${usr.id}`,
+            type: 'PUT',
+            data: user,
+            success: (data) => {
+              console.log(data);
+            }
+          });
+        sessionStorage.removeItem("login")
+        dispatch(login({}))
+    return navigate("/login")
 
       }
     }
@@ -93,36 +99,6 @@ const Register = () => {
     });
   };
   const validate = (e) => {
-    if (e.target.name === "password") {
-      if (!passwordReGex.test(user.password)) {
-        setErr((prev) => {
-          return {
-            ...prev,
-            password: true,
-          };
-        });
-        setMsg((prev) => {
-          return {
-            ...prev,
-            password: "Password Validation Failed",
-          };
-        });
-      } else {
-        setErr((prev) => {
-          return {
-            ...prev,
-            password: false,
-          };
-        });
-        setMsg((prev) => {
-          return {
-            ...prev,
-            password: "",
-          };
-        });
-      }
-      validatecpass();
-    }
     if (e.target.name === "eid") {
       if (!usernameReGex.test(user.eid)) {
         setErr((prev) => {
@@ -240,35 +216,6 @@ const Register = () => {
       }
     }
   };
-  function validatecpass() {
-    if (user.password !== user.cpass) {
-      setErr((prev) => {
-        return {
-          ...prev,
-          cpass: true,
-        };
-      });
-      setMsg((prev) => {
-        return {
-          ...prev,
-          cpass: "Password doesn't match",
-        };
-      });
-    } else {
-      setErr((prev) => {
-        return {
-          ...prev,
-          cpass: false,
-        };
-      });
-      setMsg((prev) => {
-        return {
-          ...prev,
-          cpass: "",
-        };
-      });
-    }
-  }
   return (
     <div className="registerContainer">
       {alert && <TransitionAlerts setAlert={setAlert} alert={alert}>Fill the form correctly.</TransitionAlerts>}
@@ -330,46 +277,18 @@ const Register = () => {
             onBlur={validate}
             name="eid"
             required
-            onFocus={()=>{(alert === true) && setAlert(false)}}
-          />
-          <TextField
-            error={err.password}
-            id="outlined-error-helper-text"
-            type="password"
-            label="Password"
-            helperText={msg.password}
-            value={user.password}
-            onChange={handleChange}
-            onBlur={validate}
-            name="password"
-            required
-            onFocus={()=>{(alert === true) && setAlert(false)}}
-          />
-          <TextField
-            error={err.cpass}
-            id="outlined-error-helper-text"
-            type="password"
-            label="Confirm Password"
-            helperText={msg.cpass}
-            value={user.cpass}
-            onChange={handleChange}
-            onBlur={validatecpass}
-            name="cpass"
-            required
+            disabled
             onFocus={()=>{(alert === true) && setAlert(false)}}
           />
           <br />
           <Button style={{margin: "10px"}} 
           disabled={err.password && err.username} 
           variant="contained" 
-          type='submit'>Sign Up&nbsp;</Button>
-        <Link style={{textDecoration: "none"}} to="/login">
-        <Button style={{margin: "10px"}} variant="outlined" type='button'>Sign In</Button>
-        </Link>
+          type='submit'>Update&nbsp;</Button>
         </div>
       </Box>
     </div>
   );
 };
 
-export default Register;
+export default Profile;

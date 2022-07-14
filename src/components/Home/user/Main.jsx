@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Calendar from "../Calendar"
 import CardMain from './CardMain'
 import CardReview from './CardReview'
 import CardHolidays from './CardHolidays'
 import { Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 
 const Main = () => {
+  const navigate = useNavigate()
+  useEffect(()=>{
+    if(!sessionStorage.getItem("login"))
+        navigate("/login")
+  },[])
   return (
     <div className='main'>
       <Grid container spacing={0}>

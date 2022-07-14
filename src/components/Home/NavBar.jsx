@@ -3,8 +3,7 @@ import { IconButton,Menu,MenuItem } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { selectUser } from '../../store/userSlice';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const NavBar = () => {
@@ -48,8 +47,7 @@ const NavBar = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Change Password</MenuItem>
+                <MenuItem onClick={handleClose}><Link style={{textDecoration: "none",color: "black"}} to="/profile">Profile</Link></MenuItem>
                 <MenuItem onClick={()=>{
                   handleClose()
                   sessionStorage.removeItem("login")

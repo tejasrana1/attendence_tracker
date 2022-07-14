@@ -11,6 +11,8 @@ export const userSlice = createSlice({
             email: (innitialData) ? innitialData.email : null,
             eid: (innitialData) ? innitialData.eid : null,
             phone: (innitialData) ? innitialData.phone : null,
+            role: (innitialData) ? innitialData.role : null,
+            id: (innitialData) ? innitialData.id : null,
         },
         attendence: (attd)? attd: [],
         today: {}

@@ -9,10 +9,11 @@
       "id": 1
     },
     {
-      "name": "tejas",
+      "name": "tejas rana",
       "email": "tej@qa",
       "eid": "1111",
       "phone": "1231231231",
+      "role": "admin",
       "password": "$2a$10$D70ilKDV4wLxOg3M.8tmLOPfmrDBvMulX5vtiv9pXPTbgBMTeG9LO",
       "id": 2
     },
@@ -48,6 +49,22 @@
       "phone": "1231231231",
       "password": "$2a$10$xODJvFStuGn2vEQxvgq9/eeNWYDWCC50sa7iMg0TegzeeRPemr16u",
       "id": 6
+    },
+    {
+      "name": "rana",
+      "email": "tejasrana@g.c",
+      "eid": "0001",
+      "phone": "8571903737",
+      "password": "$2a$10$HfA9TyFqg.LOINzJBX53qekPW4z39eKFgQWQtKJMlybzi/YcVsWZm",
+      "id": 7
+    },
+    {
+      "name": "abc",
+      "email": "a@a",
+      "eid": "1119",
+      "phone": "1231231231",
+      "password": "$2a$10$txGW0HzHCTQLxA0Hxnjiiu/dYRXTveI9geJxhJeBgO1LnUxDeBoEm",
+      "id": 8
     }
   ],
   "time": [
@@ -129,6 +146,19 @@
       "date": "13 Jul 2022",
       "status": "W",
       "id": 9
+    },
+    {
+      "eid": "1111",
+      "signIn": "1657795219468",
+      "date": "14 Jul 2022",
+      "status": "W"
+    },
+    {
+      "eid": "1231",
+      "signIn": "1657795528133",
+      "date": "14 Jul 2022",
+      "status": "W",
+      "id": 10
     }
   ]
 }

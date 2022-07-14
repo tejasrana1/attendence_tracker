@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField,Box,Button } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { login } from '../store/userSlice'
@@ -12,6 +12,10 @@ import { Link,useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const navigate = useNavigate();
+    useEffect(()=>{
+        if(sessionStorage.getItem("login"))
+        navigate("/")
+    },[])
   const [alert,setAlert] = useState(false)
     const [user,setUser] = useState({
         username: "",
@@ -36,13 +40,17 @@ const Login = () => {
                     name: selectedUser[0].name,
                     eid: selectedUser[0].eid,
                     phone: selectedUser[0].phone,
-                    email: selectedUser[0].email
+                    email: selectedUser[0].email,
+                    role: selectedUser[0].role,
+                    id: selectedUser[0].id
                 }))
                 sessionStorage.setItem("login", JSON.stringify({
                     name: selectedUser[0].name,
                     eid: selectedUser[0].eid,
                     phone: selectedUser[0].phone,
-                    email: selectedUser[0].email
+                    email: selectedUser[0].email,
+                    role: selectedUser[0].role,
+                    id: selectedUser[0].id
                 }))
                 return navigate("/");
             }

@@ -1,29 +1,37 @@
 .sidebar{
     z-index: 1;
-    background-color: #06283D;
+    background-color: #ffffff;
     height: 100vh;
     width: 18vw;
     display: flex;
     flex-direction: column;
     padding: 0 10px;
+    padding-top: 200px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 .sidebar p:first-child{
-    margin-top: 20vh;
+    /* margin-top: 20vh; */
 }
-.sidebar p{
+.sidebar a{
     text-align: left;
     margin: 20px 0;
-    color: #FFFFFF;
+    color: #06283D;
     font-size: 1.2rem;
     cursor: pointer;
-    padding: 10px 3px;
+    padding: 10px 10px;
+    padding-top: 20px;
     border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
 }
-.sidebar p:hover{
-    background-color: #51557E;
+.sidebar a:hover{
+    background-color: rgb(170, 162, 162);
 }
+.active{
+    background: rgb(214, 207, 207);
+    
+   }
 .mainContainer{
     display: flex;
     flex-direction: column;
@@ -62,7 +70,7 @@
     top: 10vh;
     left: 18vw;
     background-color: #EBEDEC;
-    width: 85vw;
+    width: 82vw;
     height: 93vh;
     overflow: scroll;
     overflow-x: hidden;
@@ -116,9 +124,10 @@ p{
     margin-top: 0;
 }
 .admin{
-    width: 250px;
+    width: 230px;
     height: 150px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .adminData{
@@ -127,30 +136,53 @@ p{
     max-width: 1060px;
     height: 60vh;
     overflow-y: scroll;
-    background-color: #2C3639;
+    background-color: #FFFFFF;
     border-radius: 20px;
     padding-top: 10px;
+    text-align: left;
 }
 
 .profileCard{
     padding: 15px;
-    min-height: 80px;
-    width: 85%;
+    /* height: 250px; */
+    width: 200px;
+    /* margin: 30px auto; */
+    /* display: inline-block; */
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-radius: 10px;
-    margin: 20px auto;
+    margin: 20px;
     background: #EBEDEC;
     text-align: left;
     box-sizing: content-box;
     transition: 200ms;
     cursor: pointer;
     font-size: 1.1rem;
-    color: #1e2425;
+    color: #000000;
     font-weight: 500;
 }
 .profileCard:hover{
     transform: scale(1.03);
 }
+.profileEid{
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.profileName{
+    font-size: 1.1rem;
+    color: rgb(73, 70, 70);
+    font-weight: 400;
+    margin-bottom: 5px;
+
+
+}
+.profilePhone{
+    font-size: 1rem;
+    color: rgb(73, 70, 70);
+    font-weight: 400;
+}
+
+
 
 
 

@@ -4,10 +4,15 @@ import { useSelector } from 'react-redux'
 import { selectData,selectAttendance } from '../../../store/adminSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import ProfileCard from './ProfileCard'
+import { useNavigate } from 'react-router-dom'
 
 
 const Main = () => {
+      const navigate = useNavigate()
+  useEffect(()=>{
+    if(!sessionStorage.getItem("login"))
+        navigate("/login")
+  },[])
       const data = useSelector(selectData)
       const attendance = useSelector(selectAttendance)
       let [activeUsers, setActiveUsers] = useState(0)
@@ -57,11 +62,17 @@ const Main = () => {
             let today = new Date()
                   let todayAt =  attendance.filter((at)=> (new Date(at.date)).toString().slice(4,15) === today.toString().slice(4,15))
                   let dt = []
-                  todayAt.forEach((td)=>{
-                        data.forEach((d)=>{
+                  console.log(data);
+                  console.log(attendance);
+                  console.log(todayAt);
+                  data.forEach((d)=>{
+                        if(todayAt.length)
+                              todayAt.forEach((td)=>{
                               if(d.eid !== td.eid && d.status!=="deleted")
                               dt.push(d)
                         })
+                        else if(d.status!=="deleted")
+                        dt.push(d)
                   })
                   setProfiles(dt)
       }
@@ -71,12 +82,10 @@ const Main = () => {
             console.log(profiles);
       }
       function mapped(elm){
-            return <div className='profileCard'>
-                  <p>{elm.eid}</p>
-            <p>{elm.name}</p>
-            <p>{elm.phone}</p>
-            <p>{elm.email}</p>
-    
+      return <div className='profileCard'>
+                  <p className='profileEid'>{elm.eid}</p>
+            <p className='profileName'>{elm.name}</p>
+            <p className='profilePhone'>{elm.phone}</p>
         </div>
       }
   return (
